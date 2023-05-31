@@ -20,7 +20,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <label for="title" class="form-label">Title</label>
-                                    <input type="text" class="form-control" id="title" name="title" value="{{ old('title', $lottery->title) }}">
+                                    <input type="text" class="form-control" id="title" name="title" value="{{ old('title', $lottery->title ?? 'Lottery: ' . now()->format('d.m.Y')) }}" placeholder="Lottery">
                                 </div>
 
                                 <div class="col-md-4">
@@ -40,8 +40,8 @@
 
                                 <!-- Maximum number of tickets  per player-->
                                 <div class="col-md-4">
-                                    <label for="max_tickets_per_player" class="form-label">Maximum number of tickets per player</label>
-                                    <input type="number" class="form-control" id="max_tickets_per_player" name="max_tickets_per_player" value="{{ old('max_tickets_per_player', $lottery->max_tickets_per_player ?? 10) }}">
+                                    <label for="maximum_tickets_per_player" class="form-label">Maximum number of tickets per player</label>
+                                    <input type="number" class="form-control" id="maximum_tickets_per_player" name="maximum_tickets_per_player" value="{{ old('maximum_tickets_per_player', $lottery->maximum_tickets_per_player ?? 10) }}">
                                 </div>
 
                                 <!-- Ticket price -->
@@ -54,6 +54,16 @@
                                 <div class="col-md-4">
                                     <label for="starting_price" class="form-label">Starting price</label>
                                     <input type="number" class="form-control" id="starting_price" name="starting_price" value="{{ old('starting_price', $lottery->starting_price ?? 1000) }}">
+                                </div>
+
+                                <!-- Chance to win -->
+                                <div class="col-md-4">
+                                    <label for="chance_to_win" class="form-label">% Chance to win</label>
+                                    <input type="number" class="form-control" id="chance_to_win" name="chance_to_win" value="{{ old('chance_to_win', $lottery->chance_to_win ?? 50) }}">
+                                </div>
+
+                                <div class="col-md-4 text-end mt-2">
+                                    <button type="submit" class="btn btn-primary mt-4">{{ $lottery->id ? 'Update' : 'Create' }}</button>
                                 </div>
 
                             </div>

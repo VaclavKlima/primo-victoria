@@ -19,17 +19,21 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Draw Date</th>
                                     <th scope="col">Draw Time</th>
-                                    <th scope="col">Winning Numbers</th>
+                                    <th scope="col">Tickets sold</th>
+                                    <th scope="col">% win</th>
+                                    <th scope="col">Current price</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($lotteries as $lottery)
                                     <tr>
-                                        <td>{{ $lottery->name }}</td>
-                                        <td>{{ $lottery->draw_date }}</td>
-                                        <td>{{ $lottery->draw_time }}</td>
-                                        <td>{{ $lottery->winning_numbers }}</td>
+                                        <td>{{ $lottery->title }}</td>
+                                        <td>{{ $lottery->start_date->format('d.m.Y H:i') }}</td>
+                                        <td>{{ $lottery->end_date->format('d.m.Y H:i') }}</td>
+                                        <td>{{ $lottery->tickets_count }}</td>
+                                        <td>{{ $lottery->chance_to_win }}</td>
+                                        <td>{{ number_format($lottery->current_price, 2,'.', ' ') }}</td>
                                         <td>
                                             <a href="{{ route('lottery.show', $lottery) }}" class="btn btn-primary">View</a>
                                             <a href="{{ route('lottery.edit', $lottery) }}" class="btn btn-primary">Edit</a>
@@ -44,7 +48,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="5">{{ $lotteries->links() }}</td>
+                                    <td colspan="7">{{ $lotteries->links() }}</td>
                                 </tr>
                             </tfoot>
                         </table>

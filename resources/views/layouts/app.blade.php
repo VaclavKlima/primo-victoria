@@ -20,10 +20,15 @@
     <main id="main">
         <!-- Page Content -->
         <div class="container mt-4">
+            @include('layouts.alerts')
+
             @yield('content')
         </div>
     </main>
 </div>
+
+<!-- Scripts -->
+@yield('scripts')
 
 </body>
 </html>

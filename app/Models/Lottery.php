@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Lottery extends Model
@@ -17,11 +18,27 @@ class Lottery extends Model
         'starting_price',
         'current_price',
         'ticket_price',
-        'owner_name'
+        'owner_name',
+        'chance_to_win',
     ];
 
     protected array $dates = [
         'start_date',
         'end_date',
     ];
+
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+    ];
+
+    public function tickets(): HasMany
+    {
+        return $this->hasMany(LotteryTicket::class);
+    }
+
+    public function players(): HasMany
+    {
+        return $this->hasMany(LotteryPlayer::class);
+    }
 }
