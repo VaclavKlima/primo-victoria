@@ -20,16 +20,19 @@ class Lottery extends Model
         'ticket_price',
         'owner_name',
         'chance_to_win',
+        'drawn_at',
     ];
 
     protected array $dates = [
         'start_date',
         'end_date',
+        'drawn_at',
     ];
 
     protected $casts = [
         'start_date' => 'datetime',
         'end_date' => 'datetime',
+        'drawn_at' => 'datetime',
     ];
 
     public function tickets(): HasMany

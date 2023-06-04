@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LotteryRequest;
 use App\Models\Lottery;
+use App\Webhooks\LotteryCreatedWebhook;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
@@ -28,6 +29,8 @@ class LotteryController extends Controller
     public function store(LotteryRequest $request): RedirectResponse
     {
         $lottery = Lottery::create($request->validated());
+
+        (new LotteryCreatedWebhook($lottery))->send();
 
         return redirect()
             ->route('lottery.index')

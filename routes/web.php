@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LotteryDrawWinnerController;
 use App\Http\Controllers\LotteryTicketsController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\LotteryController;
@@ -25,3 +26,4 @@ Route::get('/home', HomepageController::class)->name('home');
 Route::resource('/lottery', LotteryController::class);
 Route::post('/lottery/{lottery}/tickets', [LotteryTicketsController::class, 'store'])->name('lottery.tickets.create');
 Route::get('/lottery/{lottery}/tickets', [LotteryTicketsController::class, 'index'])->name('lottery.tickets.index');
+Route::get('/lottery/{lottery}/draw-winner', LotteryDrawWinnerController::class)->name('lottery.draw-winner');

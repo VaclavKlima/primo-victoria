@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Lottery;
 use App\Models\LotteryTicket;
+use App\Webhooks\LotteryTicketsAddedWebhook;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class LotteryTicketsController extends Controller
     public function index(Lottery $lottery): JsonResponse
     {
         return response()->json([
-           'tickets' => $lottery->players()->with('tickets')->get()
+            'tickets' => $lottery->players()->with('tickets')->get()
         ]);
     }
 
@@ -34,6 +35,7 @@ class LotteryTicketsController extends Controller
         }
 
         $tickets = $lottery->tickets()->orderByDesc('ticket_number')->pluck('ticket_number');
+        $isFirstTicket = $tickets->count() === 0;
 
         // generate a random number 1000000 - 9999999 that is not in the $tickets array with lottery->change_to_win chance
         $chanceToWin = $lottery->chance_to_win;
@@ -47,15 +49,23 @@ class LotteryTicketsController extends Controller
         if ($tickets->count() > 0) {
             $currentNumber = $tickets->first();
         }
-
+        $createdTickets = collect();
         foreach (range(1, $ticketNumbers) as $key) {
             $currentNumber += $increment;
-            LotteryTicket::create([
+            $ticket = LotteryTicket::create([
                 'lottery_id' => $lottery->id,
                 'lottery_player_id' => $player->id,
-                'ticket_number' => (int) $currentNumber,
+                'ticket_number' => (int)$currentNumber,
             ]);
+
+            $createdTickets->push($ticket);
         }
+
+        $lottery->current_price = $lottery->starting_price + ($lottery->ticket_price * $lottery->tickets()->count());
+        $lottery->save();
+
+        (new LotteryTicketsAddedWebhook($player, $createdTickets, $isFirstTicket))->send();
+
 
         return response()->json([
             'message' => 'Tickets added successfully.',

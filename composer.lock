@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aa322c53454393ed775cfe4807d54a50",
+    "content-hash": "3e25600ceee025edd9d4255efc3ac2eb",
     "packages": [
         {
             "name": "brick/math",
@@ -303,6 +303,44 @@
                 }
             ],
             "time": "2022-12-15T16:57:16+00:00"
+        },
+        {
+            "name": "dragan/discord-webhooks",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/VaclavKlima/discord-webhooks.git",
+                "reference": "d03c254be12d6864d9768bdd9101449117e1ef35"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/VaclavKlima/discord-webhooks/zipball/d03c254be12d6864d9768bdd9101449117e1ef35",
+                "reference": "d03c254be12d6864d9768bdd9101449117e1ef35",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Dragan\\DiscordWebhooks\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dragan",
+                    "email": "61498435+VaclavKlima@users.noreply.github.com"
+                }
+            ],
+            "description": "Package for creating and sending messages via Discord webhooks",
+            "support": {
+                "issues": "https://github.com/VaclavKlima/discord-webhooks/issues",
+                "source": "https://github.com/VaclavKlima/discord-webhooks/tree/stable"
+            },
+            "time": "2022-11-08T18:52:46+00:00"
         },
         {
             "name": "dragonmantank/cron-expression",
@@ -7883,7 +7921,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "dragan/discord-webhooks": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

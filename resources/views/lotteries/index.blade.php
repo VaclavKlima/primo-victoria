@@ -33,11 +33,13 @@
                                         <td>{{ $lottery->end_date->format('d.m.Y H:i') }}</td>
                                         <td>{{ $lottery->tickets_count }}</td>
                                         <td>{{ $lottery->chance_to_win }}</td>
-                                        <td>{{ number_format($lottery->current_price, 2,'.', ' ') }}</td>
+                                        <td>{{ number_format($lottery->current_price, 0,'.', ' ') }}</td>
                                         <td>
-                                            <a href="{{ route('lottery.show', $lottery) }}" class="btn btn-primary">View</a>
+                                            <a href="{{ route('lottery.show', $lottery) }}" class="btn btn-outline-primary">View</a>
                                             <a href="{{ route('lottery.edit', $lottery) }}" class="btn btn-primary">Edit</a>
-                                            <form action="{{ route('lottery.destroy', $lottery) }}" method="POST" class="d-inline-block">
+                                            <a href="{{ route('lottery.draw-winner', $lottery) }}" class="btn btn-success @if($lottery->drawn_at) disabled @endif" onclick="return confirm('Are you sure?')">Draw</a>
+
+                                            <form action="{{ route('lottery.destroy', $lottery) }}" method="POST" class="d-inline-block" onsubmit="return confirm('Are you sure?')">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Delete</button>

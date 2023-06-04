@@ -26,6 +26,6 @@ class LotteryTicket extends Model
 
     public function player(): BelongsTo
     {
-        return $this->belongsTo(LotteryPlayer::class);
+        return $this->belongsTo(LotteryPlayer::class, 'lottery_player_id', 'id');
     }
 }
