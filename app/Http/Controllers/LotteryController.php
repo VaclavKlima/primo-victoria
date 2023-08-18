@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LotteryRequest;
 use App\Models\Lottery;
+use App\Models\LotteryPlayer;
 use App\Webhooks\LotteryCreatedWebhook;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -41,6 +42,7 @@ class LotteryController extends Controller
     {
         return view('lotteries.show', [
             'lottery' => $lottery,
+            'players' => LotteryPlayer::getUniquePlayers(),
         ]);
     }
 

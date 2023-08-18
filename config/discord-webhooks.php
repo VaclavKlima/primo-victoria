@@ -32,8 +32,8 @@ return [
     |
     */
     'channels' => [
-        'lottery' =>'https://discord.com/api/webhooks/1114949973222641704/lyDQUg6-7TqJ76PA2bebl-8t_KYB4bhFsZmDc7L6VPftuyFeejoYwUS0m6kntCrzzn1c',
-        'lottery_tickets' => 'https://discord.com/api/webhooks/1114949296014512178/oRxxZ30-zYOyW6kPFiW7Q5AhoJbLxHcg-DhMG4AeELid33fc5GED5wDw5X52VFBxM6f-',
+        'lottery' => env('DISCORD_LOTTERY_WEBHOOK', ''),
+        'lottery_tickets' => env('DISCORD_LOTTERY_TICKETS_WEBHOOK', ''),
         'second_example_channel' => '',
     ],
 

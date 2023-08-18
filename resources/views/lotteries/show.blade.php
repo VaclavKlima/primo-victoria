@@ -21,18 +21,24 @@
                             Add tickets to player
                         </div>
                         <div class="col-md-4">
-                            <input type="text" placeholder="Player name" x-model="form.player_name" class="form-control" name="player_name">
+                            <input type="text" placeholder="Player name" list="players" x-model="form.player_name" class="form-control" name="player_name">
+                            <datalist id="players">
+                                @foreach($players as $player)
+                                    <option value="{{ $player }}">
+                                @endforeach
+                            </datalist>
                         </div>
                         <div class="col-md-4">
                             <input type="number" placeholder="Number of tickets" x-model="form.number_of_tickets" :max="lottery.maximum_tickets_per_player" class="form-control">
                         </div>
                         <div class="col-md-2">
-                            <span class="alert alert-info">
-                                Golds: <span x-text="form.number_of_tickets * lottery.ticket_price"></span>
-                            </span>
-
+                            <div class="input-group mb-3">
+                                <input type="number" placeholder="Ticket price" x-model.lazy="total_price" class="form-control">
+                                <span class="input-group-text" id="basic-addon2">Gold</span>
+                            </div>
                         </div>
                         <div class="col-md-2">
+
                             <button class="btn btn-primary" x-on:click="addTickets()">Add tickets</button>
                         </div>
                     </div>
@@ -116,6 +122,14 @@
                             this.message_class = 'alert-danger';
                         });
                 },
+
+                get total_price() {
+                    return this.lottery.ticket_price * this.form.number_of_tickets;
+                },
+
+                set total_price(value) {
+                    this.form.number_of_tickets = Math.floor(value / this.lottery.ticket_price) ?? 1;
+                }
             }
         }
     </script>
