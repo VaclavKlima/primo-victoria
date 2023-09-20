@@ -51,6 +51,7 @@ class LotteryTicketsAddedWebhook extends Webhook
         $description .= '```' . $this->table($table) . '```';
         $embed->description($description);
 
+
         $this->webhook->addEmbed($embed);
         $this->webhook->username('Loterie');
     }
