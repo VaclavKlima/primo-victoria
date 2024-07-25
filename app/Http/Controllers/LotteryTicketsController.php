@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Lottery;
 use App\Models\LotteryTicket;
 use App\Webhooks\LotteryTicketsAddedWebhook;
+use Dragan\DiscordWebhooks\Exceptions\DiscordWebhookResponseException;
+use Dragan\DiscordWebhooks\Exceptions\DiscordWebhookValidationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -17,6 +19,10 @@ class LotteryTicketsController extends Controller
         ]);
     }
 
+    /**
+     * @throws DiscordWebhookValidationException
+     * @throws DiscordWebhookResponseException
+     */
     public function store(Lottery $lottery, Request $request): JsonResponse
     {
         $player = $lottery->players()->firstOrCreate([
@@ -64,7 +70,21 @@ class LotteryTicketsController extends Controller
         $lottery->current_price = $lottery->starting_price + ($lottery->ticket_price * $lottery->tickets()->count());
         $lottery->save();
 
-        (new LotteryTicketsAddedWebhook($player, $createdTickets, $isFirstTicket))->send();
+        $ticketCount = $createdTickets->count();
+        $chunkIteration = 0;
+        $lotteryPrice = $lottery->current_price;
+
+        foreach ($createdTickets->chunk(500) as $chunk) {
+            if ($chunk->count() === 500) {
+                $chunkIteration++;
+            }
+
+            $currentPrice = $lotteryPrice - (($ticketCount - ($chunkIteration * 500) - ($chunk->count() < 500 ? $chunk->count() : 0)) * $lottery->ticket_price);
+
+            (new LotteryTicketsAddedWebhook($player, $chunk, $isFirstTicket, $currentPrice))->send();
+
+            $isFirstTicket = false;
+        }
 
 
         return response()->json([

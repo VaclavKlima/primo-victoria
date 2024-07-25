@@ -4,6 +4,7 @@ namespace App\Webhooks;
 
 use App\Models\LotteryPlayer;
 use App\Models\LotteryTicket;
+use Dragan\DiscordWebhooks\Exceptions\DiscordWebhookValidationException;
 use Dragan\DiscordWebhooks\Services\Embed;
 use Illuminate\Support\Collection;
 
@@ -13,8 +14,9 @@ class LotteryTicketsAddedWebhook extends Webhook
      * @param LotteryPlayer $lotteryPlayer
      * @param Collection<LotteryTicket> $tickets
      * @param bool $isFirstTicket
+     * @throws DiscordWebhookValidationException
      */
-    public function __construct(LotteryPlayer $lotteryPlayer, Collection $tickets, bool $isFirstTicket = false)
+    public function __construct(LotteryPlayer $lotteryPlayer, Collection $tickets, bool $isFirstTicket = false, int $currentPrice = null   )
     {
         $this->webhook = (new \Dragan\DiscordWebhooks\Services\Webhook());
         $this->webhook->channel('lottery_tickets');
@@ -30,7 +32,7 @@ class LotteryTicketsAddedWebhook extends Webhook
 
         $embed = new Embed();
         $embed->title('Hráč ' . $lotteryPlayer->name . ' si koupil ' . $tickets->count() . ' lístků');
-        $description = "Celková výhra se zvýšila na **" . number_format($lotteryPlayer->lottery->current_price, 0, ',', ' ') . "** Goldů\n";
+        $description = "Celková výhra se zvýšila na **" . number_format( $currentPrice ?? $lotteryPlayer->lottery->current_price, 0, ',', ' ') . "** Goldů\n";
         $description .= "Jeho čisla jsou:\n";
 
         // create visual representation of the tickets as a table

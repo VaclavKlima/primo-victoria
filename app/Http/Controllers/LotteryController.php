@@ -15,6 +15,7 @@ class LotteryController extends Controller
     {
         return view('lotteries.index', [
             'lotteries' => Lottery::query()
+                ->orderByDesc('end_date')
                 ->withCount('tickets')
                 ->paginate(10),
         ]);

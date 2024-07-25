@@ -41,7 +41,7 @@
                                 <!-- Maximum number of tickets  per player-->
                                 <div class="col-md-4">
                                     <label for="maximum_tickets_per_player" class="form-label">Maximum number of tickets per player</label>
-                                    <input type="number" class="form-control" id="maximum_tickets_per_player" name="maximum_tickets_per_player" value="{{ old('maximum_tickets_per_player', $lottery->maximum_tickets_per_player ?? 10) }}">
+                                    <input type="number" class="form-control" id="maximum_tickets_per_player" name="maximum_tickets_per_player" value="{{ old('maximum_tickets_per_player', $lottery->maximum_tickets_per_player ?? 100000) }}">
                                 </div>
 
                                 <!-- Ticket price -->
@@ -53,7 +53,7 @@
                                 <!-- Starting price -->
                                 <div class="col-md-4">
                                     <label for="starting_price" class="form-label">Starting price</label>
-                                    <input type="number" class="form-control" id="starting_price" name="starting_price" value="{{ old('starting_price', $lottery->starting_price ?? 1000) }}">
+                                    <input type="number" class="form-control" id="starting_price" name="starting_price" value="{{ old('starting_price', $lottery->starting_price ?? 100000) }}">
                                 </div>
 
                                 <!-- Chance to win -->
