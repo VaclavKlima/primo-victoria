@@ -41,7 +41,7 @@
                                 <!-- Maximum number of tickets  per player-->
                                 <div class="col-md-4">
                                     <label for="maximum_tickets_per_player" class="form-label">Maximum number of tickets per player</label>
-                                    <input type="number" class="form-control" id="maximum_tickets_per_player" name="maximum_tickets_per_player" value="{{ old('maximum_tickets_per_player', $lottery->maximum_tickets_per_player ?? 100000) }}">
+                                    <input type="number" class="form-control" id="maximum_tickets_per_player" name="maximum_tickets_per_player" value="{{ old('maximum_tickets_per_player', $lottery->maximum_tickets_per_player ?? 100000000) }}">
                                 </div>
 
                                 <!-- Ticket price -->
@@ -59,7 +59,7 @@
                                 <!-- Chance to win -->
                                 <div class="col-md-4">
                                     <label for="chance_to_win" class="form-label">% Chance to win</label>
-                                    <input type="number" class="form-control" id="chance_to_win" name="chance_to_win" value="{{ old('chance_to_win', $lottery->chance_to_win ?? 50) }}">
+                                    <input type="number" class="form-control" id="chance_to_win" name="chance_to_win" value="{{ old('chance_to_win', $lottery->chance_to_win ?? 25) }}">
                                 </div>
 
                                 <div class="col-md-4 text-end mt-2">
